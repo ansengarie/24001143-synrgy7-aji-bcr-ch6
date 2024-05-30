@@ -1,13 +1,3 @@
-# Express TS Libary API: Controller->Service->Repository Architecture
-
-- Author: Aldi Ageng
-
-## API Swagger Docs
-http://localhost:8000/api-docs/
-
-## API Postman Docs
-https://documenter.getpostman.com/view/12822793/2sA3QqfXjd
-
 ## How to use?
 ```
 $ npm install
@@ -24,3 +14,7 @@ $ docker compose down -v # delete database and the volume
 
 # How To make migrate
 npm run knex migrate:latest
+
+
+## ERD
+![Untitled (3)](https://github.com/ansengarie/24001143-synrgy7-aji-bcr-ch6/assets/58410032/5c4a8c64-b5a4-4124-94c4-333900a0e1d5)
