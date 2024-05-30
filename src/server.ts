@@ -2,7 +2,6 @@ import express, { Express } from 'express'
 import { Model } from 'objection'
 import { config } from 'dotenv'
 import morgan from 'morgan'
-import cors from 'cors'
 import swaggerUi from 'swagger-ui-express'
 import swaggerDocument from './docs/swagger-docs.json'
 
@@ -17,7 +16,6 @@ Model.knex(knexInstance)
 class App {
   public app: Express = express()
   constructor() {
-    this.app.use(cors())
     this.app.use(morgan('combined'))
     this.app.use(express.urlencoded({ extended: true }))
     this.app.use(express.json())
