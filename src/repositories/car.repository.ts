@@ -11,7 +11,7 @@ export class CarRepository {
         }
       })
 
-    if ((await queryBuilder).length <= 1) {
+    if ((await queryBuilder).length <= 0) {
       return []
     }
     if (search !== undefined) {

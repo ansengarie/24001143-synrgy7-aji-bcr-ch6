@@ -97,12 +97,12 @@ export const authenticateTokenAdmin: (req: Request, res: Response, next: NextFun
     const tokenUser = bearerToken.split('Bearer ')[1]
     const tokenPayload = jwt.verify(tokenUser, process.env.JWT_SECRET ?? 'Rahasia') as Users
 
-    const user = await UsersModel.query().findById(tokenPayload.id).whereBetween('role', ['super_admin', 'admin'])
+    const user = await UsersModel.query().findById(tokenPayload.id).whereIn('role', ['super_admin', 'admin'])
     if (user === undefined) {
       ResponseHelper.error('Email or password invalid', null, 401)(res)
       return
     }
-    const isHavetoken = await UsersModel.query().whereBetween('role', ['super_admin', 'admin'])
+    const isHavetoken = await UsersModel.query().whereIn('role', ['super_admin', 'admin'])
 
     if (isHavetoken === undefined) {
       ResponseHelper.error('Email or password invalid', null, 401)(res)
