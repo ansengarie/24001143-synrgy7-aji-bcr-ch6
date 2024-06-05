@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Library API Documentations",
-    "description": "Library API Documentations",
+    "title": "BCR - Challenge Chapter 6",
+    "description": "Binar Car Rental Documentations",
     "version": "1.0.0"
   },
   "servers": [
@@ -13,9 +13,7 @@
   "paths": {
     "/borrows": {
       "post": {
-        "tags": [
-          "Library System"
-        ],
+        "tags": ["Library System"],
         "summary": "Member Borrow Book",
         "description": "create borrow",
         "requestBody": {
@@ -74,9 +72,7 @@
     },
     "/returns": {
       "post": {
-        "tags": [
-          "Library System"
-        ],
+        "tags": ["Library System"],
         "summary": "Member Return Book",
         "description": "create return",
         "requestBody": {
@@ -135,9 +131,7 @@
     },
     "/members/borrows": {
       "get": {
-        "tags": [
-          "Library System"
-        ],
+        "tags": ["Library System"],
         "summary": "Get List Borrow",
         "description": "list borrow",
         "responses": {
@@ -178,9 +172,7 @@
     },
     "/members": {
       "post": {
-        "tags": [
-          "Member"
-        ],
+        "tags": ["Member"],
         "summary": "Create Member",
         "description": "create member",
         "requestBody": {
@@ -237,9 +229,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Member"
-        ],
+        "tags": ["Member"],
         "summary": "Get List Member",
         "description": "list member",
         "parameters": [
@@ -342,9 +332,7 @@
     },
     "/members/{id}": {
       "get": {
-        "tags": [
-          "Member"
-        ],
+        "tags": ["Member"],
         "summary": "Get one Member",
         "description": "one member",
         "parameters": [
@@ -395,9 +383,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Member"
-        ],
+        "tags": ["Member"],
         "summary": "Update member by id",
         "description": "Update member",
         "parameters": [
@@ -468,9 +454,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Member"
-        ],
+        "tags": ["Member"],
         "summary": "Delete member by id",
         "description": "Delete member",
         "parameters": [
@@ -524,9 +508,7 @@
     },
     "/books": {
       "post": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "summary": "Create Book",
         "description": "create book",
         "requestBody": {
@@ -589,9 +571,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "summary": "Get List Book",
         "description": "list book",
         "parameters": [
@@ -694,9 +674,7 @@
     },
     "/books/{id}": {
       "get": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "summary": "Get one Book",
         "description": "one book",
         "parameters": [
@@ -747,9 +725,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "summary": "Update book by id",
         "description": "Update book",
         "parameters": [
@@ -826,9 +802,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Book"
-        ],
+        "tags": ["Book"],
         "summary": "Delete book by id",
         "description": "Delete book",
         "parameters": [

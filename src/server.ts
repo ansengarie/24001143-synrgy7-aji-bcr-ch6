@@ -3,7 +3,7 @@ import { Model } from 'objection'
 import { config } from 'dotenv'
 import morgan from 'morgan'
 import swaggerUi from 'swagger-ui-express'
-import swaggerDocument from './docs/swagger-docs.json'
+import swaggerSpec from './docs/swaggerConfig'
 
 import knexInstance from './databases'
 import { route } from './routes/route'
@@ -11,7 +11,6 @@ import { route } from './routes/route'
 config()
 
 Model.knex(knexInstance)
-
 
 class App {
   public app: Express = express()
@@ -21,7 +20,7 @@ class App {
     this.app.use(express.json())
 
     this.app.use('/api/v1', route)
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
     this.app.get('/', (req, res) => {
       res.status(200).json({
