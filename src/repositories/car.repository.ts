@@ -1,3 +1,4 @@
+import { log } from 'console'
 import { type Cars, CarsModel } from '../databases/models/cars'
 
 export class CarRepository {
@@ -23,7 +24,10 @@ export class CarRepository {
     }
 
     if (capacityFilter !== undefined) {
-      await queryBuilder.where('capacity', '>=', capacityFilter as string)
+      console.log(capacityFilter)
+      console.log(typeof capacityFilter)
+
+      await queryBuilder.where('capacity', '>=', capacityFilter as number)
     }
 
     if (sort !== undefined) {

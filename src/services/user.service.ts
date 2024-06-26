@@ -80,4 +80,17 @@ export class UserService {
     const users = await this.userRepository.list(query)
     return users
   }
+
+  async findByGoogleId(googleId: string): Promise<any> {
+    return await this.userRepository.show({ googleId })
+  }
+
+  async registerGoogleUser(user: any): Promise<any> {
+    user.id = uuidv4()
+
+    return await this.userRepository.create({
+      ...user,
+      role: 'member'
+    })
+  }
 }

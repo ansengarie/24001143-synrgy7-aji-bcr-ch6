@@ -98,7 +98,7 @@ root.group('/cars', (cars) => {
    *       200:
    *         description: List of cars retrieved successfully
    */
-  cars.get('/', authenticateTokenAdmin, carController.list.bind(carController))
+  cars.get('/', carController.list.bind(carController))
 
   /**
    * @swagger

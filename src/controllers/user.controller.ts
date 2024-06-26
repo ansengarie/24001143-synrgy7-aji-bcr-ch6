@@ -77,4 +77,5 @@ export class UserController {
       ErrorHelper.handler(error, res)
     }
   }
+  
 }

@@ -14,8 +14,14 @@ export class CarsController {
   }
 
   async list(req: Request, res: Response): Promise<void> {
+    let cars: any = []
     try {
-      const cars = await this.carService.list(req.query)
+      const bearerToken = req.headers.authorization
+      if (bearerToken === undefined) {
+        cars = await this.carService.listPublic(req.query)
+      } else {
+        cars = await this.carService.list(req.query)
+      }
 
       ResponseHelper.success('Data ditemukan', cars)(res)
     } catch (error) {
