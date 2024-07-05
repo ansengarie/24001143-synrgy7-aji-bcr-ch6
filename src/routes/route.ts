@@ -11,6 +11,23 @@ const root = new RouteGroup('/api/v1', route)
 const carController = new CarsController()
 const userController = new UserController()
 
+// Swagger documentation setup
+/**
+ * @swagger
+ * openapi: "3.0.0"
+ * info:
+ *   title: Challenge 8
+ *   version: "1.0.0"
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ * tags:
+ *   - name: Super Admin
+ *   - name: Member
+ */
+
 // users
 root.group('/users', (users) => {
   /**

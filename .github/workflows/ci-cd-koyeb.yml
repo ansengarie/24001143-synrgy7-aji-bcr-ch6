@@ -54,7 +54,7 @@ jobs:
             -H "Authorization: Bearer $KOYEB_API_TOKEN" \
             -H "Content-Type: application/json" \
             -d '{
-              "name": "server-bcr",
+              "name": "24001143-synrgy7-aji-bcr-ch6",
               "git": {
                 "repo": "https://github.com/ansengarie/24001143-synrgy7-aji-bcr-ch6.git",
                 "branch": "main"
