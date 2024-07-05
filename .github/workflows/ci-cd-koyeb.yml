@@ -50,11 +50,11 @@ jobs:
         env:
           KOYEB_API_TOKEN: ${{ secrets.KOYEB_API_TOKEN }}
         run: |
-          curl -X POST "https://app.koyeb.com/services/82c07a5c-a251-4cf4-9579-9dd221fe5ab4/redeploy" \
+          curl -X POST "https://app.koyeb.com/v1/services/82c07a5c-a251-4cf4-9579-9dd221fe5ab4/redeploy" \
             -H "Authorization: Bearer $KOYEB_API_TOKEN" \
             -H "Content-Type: application/json" \
             -d '{
-              "name": "24001143-synrgy7-sahid-bcr_db-ch8",
+              "name": "server-bcr",
               "git": {
                 "repo": "https://github.com/ansengarie/24001143-synrgy7-aji-bcr-ch6.git",
                 "branch": "main"
