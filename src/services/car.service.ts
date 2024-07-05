@@ -47,6 +47,15 @@ export class CarService {
 
     const carInDB = await this.carRepository.show(id as number)
 
+    if (!image || !image.buffer) {
+      const carPayload = {
+        ...car,
+        options: optionsJson,
+        specs: specsJson
+      }
+      return await this.carRepository.update(id, carPayload as Cars, userId)
+    }
+
     if (carInDB.image == null && carInDB.image_public_id == null) {
       const result = await uploadImageToCloudinary(image, 'cars')
 
