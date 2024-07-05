@@ -18,6 +18,4 @@ npm run knex migrate:latest
 ## Deployment
   Base URL
  - https://respective-erminie-ansengarie-e5a51b94.koyeb.app/
-   
-  Api Docs
- - https://respective-erminie-ansengarie-e5a51b94.koyeb.app/api-docs/
+
