@@ -6,79 +6,176 @@ import { authenticateToken, authenticateTokenAdmin, authenticateTokenSuperAdmin 
 import upload from '../utils/upload.on.memory'
 
 export const route = Router()
-const root = new RouteGroup('/', route)
+const root = new RouteGroup('/api/v1', route)
 
 const carController = new CarsController()
 const userController = new UserController()
 
 // users
-/**
- * @swagger
- * /users:
- *   post:
- *     summary: Register admin
- *     tags: [Users]
- *     responses:
- *       201:
- *         description: Admin registered successfully
- */
 root.group('/users', (users) => {
+  /**
+   * @swagger
+   * /api/v1/users/:
+   *   post:
+   *     tags:
+   *       - Super Admin
+   *     summary: Create Admin
+   *     requestBody:
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             example:
+   *               name: "aji"
+   *               email: "aji@gmail.com"
+   *               password: "123123"
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       201:
+   *         description: Created
+   *         headers:
+   *           X-Powered-By:
+   *             schema:
+   *               type: string
+   *               example: "Express"
+   *           Access-Control-Allow-Origin:
+   *             schema:
+   *               type: string
+   *               example: "*"
+   *           Content-Type:
+   *             schema:
+   *               type: string
+   *               example: "application/json; charset=utf-8"
+   *           Content-Length:
+   *             schema:
+   *               type: integer
+   *               example: 329
+   *           ETag:
+   *             schema:
+   *               type: string
+   *               example: "W/\"149-TfAEeMMcftZLvsW1yI4cjOmOl8c\""
+   *           Date:
+   *             schema:
+   *               type: string
+   *               example: "Fri, 05 Jul 2024 01:38:27 GMT"
+   *           Connection:
+   *             schema:
+   *               type: string
+   *               example: "keep-alive"
+   *           Keep-Alive:
+   *             schema:
+   *               type: string
+   *               example: "timeout=5"
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *             example:
+   *               code: 201
+   *               status: "success"
+   *               message: "Data disimpan"
+   *               data:
+   *                 name: "aji"
+   *                 email: "aji@gmail.com"
+   *                 password: "$2b$10$0rYo3jfCy8EwE02dh6wzhOySrfKtCcIzL0dJsf/VfHdCzQy2gpkuS"
+   *                 id: "070bd32e-a8c6-41f0-90a4-704e9a974176"
+   *                 role: "admin"
+   *                 token: null
+   *                 created_at: "2024-07-05T01:38:27.751Z"
+   *                 updated_at: "2024-07-05T01:38:27.751Z"
+   */
   users.post('/', authenticateTokenSuperAdmin, userController.store.bind(userController))
 
   /**
    * @swagger
-   * /users/login:
+   * /api/v1/users/login:
    *   post:
-   *     summary: User login
-   *     tags: [Users]
+   *     tags:
+   *       - Member
+   *     summary: Login
+   *     requestBody:
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             example:
+   *               email: "herlan@gmail.com"
+   *               password: "123123"
    *     responses:
    *       200:
-   *         description: User logged in successfully
+   *         description: Successful response
+   *         content:
+   *           application/json: {}
    */
   users.post('/login', userController.login.bind(userController))
   users.post('/auth/google', userController.loginWithGoogle.bind(userController))
+
   /**
    * @swagger
-   * /users/whoami:
+   * /api/v1/users/whoami:
    *   get:
-   *     summary: Get user info
-   *     tags: [Users]
+   *     tags:
+   *       - Super Admin
+   *     summary: WHOAMI
+   *     security:
+   *       - bearerAuth: []
    *     responses:
    *       200:
-   *         description: User information retrieved successfully
+   *         description: Successful response
+   *         content:
+   *           application/json: {}
    */
   users.get('/whoami', authenticateToken, userController.whoami.bind(userController))
 
   /**
    * @swagger
-   * /users:
+   * /api/v1/users/:
    *   get:
-   *     summary: List users
-   *     tags: [Users]
+   *     tags:
+   *       - Super Admin
+   *     summary: List User
+   *     security:
+   *       - bearerAuth: []
    *     responses:
    *       200:
-   *         description: List of users retrieved successfully
+   *         description: Successful response
+   *         content:
+   *           application/json: {}
    */
   users.get('/', authenticateTokenAdmin, userController.list.bind(userController))
 
   /**
    * @swagger
-   * /users/register:
+   * /api/v1/users/register:
    *   post:
-   *     summary: Register a new user
-   *     tags: [Users]
+   *     tags:
+   *       - Member
+   *     summary: Register
+   *     requestBody:
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             example:
+   *               name: "herlan"
+   *               email: "herlan@gmail.com"
+   *               password: "123123"
    *     responses:
-   *       201:
-   *         description: User registered successfully
+   *       200:
+   *         description: Successful response
+   *         content:
+   *           application/json: {}
    */
   users.post('/register', userController.register.bind(userController))
 
   /**
    * @swagger
-   * /users/logout:
+   * /api/v1/users/logout:
    *   post:
+   *     tags:
+   *       - Member
    *     summary: User logout
-   *     tags: [Users]
    *     responses:
    *       200:
    *         description: User logged out successfully
@@ -90,96 +187,192 @@ root.group('/users', (users) => {
 root.group('/cars', (cars) => {
   /**
    * @swagger
-   * /cars:
+   * /api/v1/cars:
    *   get:
-   *     summary: List cars for admin
-   *     tags: [Cars]
+   *     tags:
+   *       - Member
+   *     summary: List Car Public
+   *     security:
+   *       - bearerAuth: []
    *     responses:
    *       200:
-   *         description: List of cars retrieved successfully
-   */
-  cars.get('/', carController.list.bind(carController))
-
-  /**
-   * @swagger
-   * /cars/public:
-   *   get:
-   *     summary: List public cars
-   *     tags: [Cars]
-   *     responses:
-   *       200:
-   *         description: List of public cars retrieved successfully
+   *         description: Successful response
+   *         content:
+   *           application/json: {}
    */
   cars.get('/public', carController.listPublic.bind(carController))
 
   /**
    * @swagger
-   * /cars:
+   * /api/v1/cars:
    *   post:
-   *     summary: Create a new car
-   *     tags: [Cars]
+   *     tags:
+   *       - Super Admin
+   *     summary: Create Cars
+   *     requestBody:
+   *       content:
+   *         multipart/form-data:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               plate:
+   *                 type: string
+   *                 example: "CCCCCCCCCC"
+   *               manufacture:
+   *                 type: string
+   *                 example: "BBBB"
+   *               model:
+   *                 type: string
+   *                 example: "BBBB"
+   *               image:
+   *                 type: string
+   *                 format: binary
+   *               image_public_id:
+   *                 type: string
+   *                 example: "ngantuk"
+   *               rent_per_day:
+   *                 type: integer
+   *                 example: "1000"
+   *               capacity:
+   *                 type: integer
+   *                 example: "6"
+   *               description:
+   *                 type: string
+   *                 example: "bagus"
+   *               available_at:
+   *                 type: string
+   *                 example: "2024-07-03T00:40:18.824Z"
+   *     security:
+   *       - bearerAuth: []
    *     responses:
    *       201:
-   *         description: Car created successfully
+   *         description: Created
+   *         content:
+   *           application/json: {}
    */
-  cars.post('/', authenticateTokenAdmin, upload.single('image'), carController.create.bind(carController))
+  cars.post('/', authenticateTokenSuperAdmin, upload.single('image'), carController.create.bind(carController))
 
   /**
    * @swagger
-   * /cars/{id}:
+   * /api/v1/cars:
    *   get:
-   *     summary: Get car by ID
-   *     tags: [Cars]
+   *     tags:
+   *       - Super Admin
+   *     summary: List Car Admin
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: Successful response
+   *         content:
+   *           application/json: {}
+   */
+  cars.get('/', authenticateTokenAdmin, carController.list.bind(carController))
+
+  /**
+   * @swagger
+   * /api/v1/cars/{id}:
+   *   get:
+   *     tags:
+   *       - Member
+   *     summary: Show Car
+   *     security:
+   *       - bearerAuth: []
    *     parameters:
    *       - in: path
    *         name: id
    *         required: true
    *         schema:
    *           type: string
-   *         description: Car ID
+   *           example: "4d9252dc-c5cf-4fcb-9b80-07c032b0d4ef"
    *     responses:
    *       200:
-   *         description: Car details retrieved successfully
+   *         description: Successful response
+   *         content:
+   *           application/json: {}
    */
-  cars.get('/:id', authenticateTokenAdmin, carController.show.bind(carController))
+  cars.get('/:id', carController.show.bind(carController))
 
   /**
    * @swagger
-   * /cars/{id}:
-   *   patch:
-   *     summary: Update car
-   *     tags: [Cars]
+   * /api/v1/cars/{id}:
+   *   put:
+   *     tags:
+   *       - Super Admin
+   *     summary: Update Car
+   *     requestBody:
+   *       content:
+   *         multipart/form-data:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               plate:
+   *                 type: string
+   *                 example: "BBBB"
+   *               manufacture:
+   *                 type: string
+   *                 example: "BBBB"
+   *               model:
+   *                 type: string
+   *                 example: "BBBB"
+   *               image:
+   *                 type: string
+   *                 format: binary
+   *               image_public_id:
+   *                 type: string
+   *                 example: "ngantuk"
+   *               rent_per_day:
+   *                 type: integer
+   *                 example: "1000"
+   *               capacity:
+   *                 type: integer
+   *                 example: "6"
+   *               description:
+   *                 type: string
+   *                 example: "bagus"
+   *               available_at:
+   *                 type: string
+   *                 example: "2024-07-03T00:40:18.824Z"
+   *     security:
+   *       - bearerAuth: []
    *     parameters:
    *       - in: path
    *         name: id
    *         required: true
    *         schema:
    *           type: string
-   *         description: Car ID
+   *           example: "4d9252dc-c5cf-4fcb-9b80-07c032b0d4ef"
    *     responses:
    *       200:
-   *         description: Car updated successfully
+   *         description: Successful response
+   *         content:
+   *           application/json: {}
    */
-  cars.patch('/:id', authenticateTokenAdmin, upload.single('image'), carController.update.bind(carController))
+  cars.put('/:id', authenticateTokenSuperAdmin, upload.single('image'), carController.update.bind(carController))
 
   /**
    * @swagger
-   * /cars/{id}:
+   * /api/v1/cars/{id}:
    *   delete:
-   *     summary: Delete car
-   *     tags: [Cars]
+   *     tags:
+   *       - Super Admin
+   *     summary: Delete Car
+   *     security:
+   *       - bearerAuth: []
    *     parameters:
    *       - in: path
    *         name: id
    *         required: true
    *         schema:
    *           type: string
-   *         description: Car ID
+   *           example: "4d9252dc-c5cf-4fcb-9b80-07c032b0d4ef"
    *     responses:
    *       204:
-   *         description: Car deleted successfully
+   *         description: Successful response
+   *         content:
+   *           application/json: {}
    */
-  cars.delete('/:id', authenticateTokenAdmin, carController.delete.bind(carController))
+  cars.delete('/:id', authenticateTokenSuperAdmin, carController.delete.bind(carController))
 })
 
-export default route
+export default root
