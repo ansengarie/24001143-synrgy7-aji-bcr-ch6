@@ -6,7 +6,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
 const config: Record<string, Knex.Config> = {
   development: {
-    client: process.env.DB_CLIENT,
+    client: process.env.DBNAME_BASE,
     connection: {
       host: process.env.DB_HOST_BASE,
       port: parseInt(process.env.DB_PORT_BASE ?? '6543'),
